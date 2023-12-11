@@ -68,8 +68,13 @@ const Login = () => {
             email: appData.user_info.email,
             pwd: appData.user_info.pwd
         }
+        const headers={
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          // 'Authorization': 'Bearer yourAccessToken',
+        } 
         try{
-            const submitLoggin = await axios.post(`/db/authenticateUser`,{params})
+            const submitLoggin = await axios.post(`/db/authenticateUser`,{params},{headers})
             const userValidated = submitLoggin.data
             return userValidated
         }catch(error){
@@ -78,11 +83,16 @@ const Login = () => {
     }
 
     const getUserInfo = async (req, res)=>{
+        const headers={
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          // 'Authorization': 'Bearer yourAccessToken',
+        } 
         const params = {
           email: appData.user_info.email
         }
         try{
-          const getUserQuery = await axios.post(`/db/userRecord`,{params})
+          const getUserQuery = await axios.post(`/db/userRecord`,{params},{headers})
           const getUserQueryResonse = await getUserQuery.data;
           return getUserQueryResonse
         }catch(error){

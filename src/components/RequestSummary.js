@@ -37,8 +37,8 @@ const [pageClass, setPageClass] = useState("container mt-5 animate__animated ani
   
  const boxStyle={
     width: "100%",
-    maxHeight: "500px",
-    overflowY: "auto"
+    maxHeight: "300px",
+    overflowY: "auto",
  }
 
  const [files, setFiles] = useState([])
@@ -85,7 +85,7 @@ const [pageClass, setPageClass] = useState("container mt-5 animate__animated ani
                             <tbody>
                                 <div className="bg-light p-0 w-100" style={{fontSize: 24}}>{toProperCase(attr.replaceAll("_"," "))}</div>
                                 {Object.keys(appData[attr]).map((item,index2)=>(
-                                    <tr style={{borderTop: "1px solid lightgray", height: 24, paddingLeft: 20, paddingRight: 10}} key={index2}>
+                                    <tr style={{borderTop: "1px solid lightgray", height: 16, paddingLeft: 20, paddingRight: 10}} key={index2}>
                                         <td style={{width: "25%"}}>{toProperCase(item.replaceAll("_"," "))}</td>
                                         <td style={{width: "70%"}}>
                                             {item && typeof appData[attr][item] ==="object" && Array.isArray(appData[attr][item]) && item=="attachments"?
