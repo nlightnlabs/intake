@@ -37,8 +37,8 @@ const [pageClass, setPageClass] = useState("container mt-5 animate__animated ani
   
  const boxStyle={
     width: "100%",
-    maxHeight: "300px",
-    overflowY: "auto",
+    // maxHeight: "300px",
+    // overflowY: "auto",
  }
 
  const [files, setFiles] = useState([])
@@ -54,7 +54,20 @@ const [pageClass, setPageClass] = useState("container mt-5 animate__animated ani
  },[])
 
  const handleSubmit = (e)=>{
-    setPage("Home")
+    let request_summary = {}
+    setAppData({...appData, request_summary})
+
+    let request_details = {}
+    setAppData({...appData, request_details})
+
+    let nextPage ="Requests"
+
+    if(e.nativeEvent.submitter.name==="againButton"){
+        nextPage = "Home"
+    }
+    setPage(pages.filter(x=>x.name===nextPage)[0])
+    setPageList([...pageList,nextPage])
+    setPageName(nextPage)
  }
 
 
@@ -64,14 +77,23 @@ const [pageClass, setPageClass] = useState("container mt-5 animate__animated ani
             <div className="col"></div>
 
             <div className="col-lg-8">
-            
-                <h1 className="text-center">Thank You</h1>
-                <h4 className="text-center">Your request is being reviewed</h4>
-                <p className="text-center">You will be notified if further information is needed</p>
 
                 <div className="d-flex justify-content-center animate__animated animate__heartbeat animate__duration-0.5s" style={{height: 150, overflow: "hidden"}}>
                     <img  src={SuccessIcon} style={{height: 125} }alt="Success Icon"/>
                 </div>
+            
+                <h1 className="text-center">Thank You</h1>
+                <h4 className="text-center">Your request is being reviewed</h4>
+
+                <div className="d-flex justify-content-center mt-3">
+                    <form onSubmit={handleSubmit}>
+                    <div className="btn-group mb-3">
+                        <button name="againButton" className="btn btn-outline-secondary" data-bs-toggle="button" type="submit">Request Again</button>
+                        <button name="requestsButton" className="btn btn-primary" data-bs-toggle="button" type="submit">See Requests</button>
+                    </div>
+                    </form>
+                </div>
+                
                 
                 <div className="=flex-fill shadow shadow-lg rounded-top-2" style={{backgroundImage: "linear-gradient(45deg, rgb(9, 128, 243), rgb(0, 223, 255))", height:25}}></div>
                 
@@ -83,9 +105,11 @@ const [pageClass, setPageClass] = useState("container mt-5 animate__animated ani
                             attr !=="user_info" && 
                             <table style={{fontSize: 14, width: "100%"}}>
                             <tbody>
-                                <div className="bg-light p-0 w-100" style={{fontSize: 24}}>{toProperCase(attr.replaceAll("_"," "))}</div>
+                                <tr >
+                                    <td colspan="2" className="bg-light p-0 w-100" style={{fontSize: 18, fontWeight: 'bold'}}>{toProperCase(attr.replaceAll("_"," "))}</td>
+                                </tr>
                                 {Object.keys(appData[attr]).map((item,index2)=>(
-                                    <tr style={{borderTop: "1px solid lightgray", height: 16, paddingLeft: 20, paddingRight: 10}} key={index2}>
+                                    <tr style={{borderTop: "1px solid lightgray", height: 14, paddingLeft: 20, paddingRight: 10}} key={index2}>
                                         <td style={{width: "25%"}}>{toProperCase(item.replaceAll("_"," "))}</td>
                                         <td style={{width: "70%"}}>
                                             {item && typeof appData[attr][item] ==="object" && Array.isArray(appData[attr][item]) && item=="attachments"?
@@ -124,15 +148,6 @@ const [pageClass, setPageClass] = useState("container mt-5 animate__animated ani
                     </table>
                     
                 </div>
-
-                <div className="d-flex justify-content-center mt-5">
-                
-                <div className="btn-group">
-                    <button name="againButton" className="btn btn-outline-primary" data-bs-toggle="button" type="submit" onClick={handleSubmit}>Request Again</button>
-                    <button name="homeButton" className="btn btn-outline-secondary" data-bs-toggle="button" type="submit" onClick={handleSubmit}>Leave</button>
-                </div>
-                </div>
-                
                 
             </div>
             <div className="col"></div>

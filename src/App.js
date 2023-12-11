@@ -104,7 +104,8 @@ function App() {
   const pageStyle={
     backgroundSize: "cover",
     backgroundImage: "linear-gradient(0deg, rgb(220, 230, 255), rgb(245, 250, 255), white)",
-    height: "100vh"
+    height: "100vh",
+    overflow: "auto"
   }
 
   
